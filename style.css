@@ -75,7 +75,6 @@ h1 {
   word-wrap: break-word;
 }
 
-
 /* bloc forecast */
 
 .bloc-forecast-time {
@@ -89,7 +88,7 @@ h1 {
 .bloc-forecast-day,
 .bloc-forecast-time {
   display: grid;
-  grid-template: 100px / repeat(7, 1fr);
+  grid-template: 100px / repeat(5, 1fr);
 }
 
 .bloc-h,

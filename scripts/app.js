@@ -1,5 +1,3 @@
-// require("dotenv").config({ path: "./env/.env" });
-
 let apiResults;
 
 if (navigator.geolocation) {
@@ -20,7 +18,15 @@ if (navigator.geolocation) {
   alert("Geolocation is not supported by your browser");
 }
 
-
 function APICall(long, lat) {
-    console.log(long,lat);
-};
+  fetch(
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&units=metric&lang=fr&appid=${API_KEY}`
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      apiResults = data;
+      console.log(apiResults);
+    });
+}
