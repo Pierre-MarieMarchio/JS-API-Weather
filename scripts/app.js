@@ -1,3 +1,8 @@
+import API_KEY from "../env/env.js";
+import arrayWeekDaysSorted from "./utility/timeGestionary.js";
+
+console.log(arrayWeekDaysSorted);
+
 let apiResults;
 
 //  const for curent weather
