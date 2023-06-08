@@ -3,6 +3,8 @@ import arrayWeekDaysSorted from "./utility/timeGestionary.js";
 
 let apiResults;
 
+const loadingOverlay = document.querySelector(".loading-overlay");
+
 //  const for curent weather
 
 const weather = document.querySelector(".weather");
@@ -18,6 +20,11 @@ const hourlyTemp = document.querySelectorAll(".hourly-temp");
 
 const dailyNames = document.querySelectorAll(".daily-name");
 const dailyForecast = document.querySelectorAll(".daily-forecast");
+
+// const for dinamic icone
+
+const imgIcone = document.querySelector(".logo-weather");
+let hour = new Date().getHours();
 
 // geolocalisation
 
@@ -95,5 +102,15 @@ function APICall(long, lat) {
             Math.round(apiResults.list[l * 8].main.temp) + "°C";
         }
       }
+
+      // dynamic icons
+
+      if (hour >= 6 && hour < 21) {
+        imgIcone.src = `../assets/day/${apiResults.list[0].weather[0].icon}.svg`;
+      } else {
+        imgIcone.src = `../assets/night/${apiResults.list[0].weather[0].icon}.svg`;
+      }
     });
+
+  loadingOverlay.classList.add("ease-out");
 }
