@@ -1,8 +1,6 @@
 import API_KEY from "../env/env.js";
 import arrayWeekDaysSorted from "./utility/timeGestionary.js";
 
-console.log(arrayWeekDaysSorted);
-
 let apiResults;
 
 //  const for curent weather
@@ -15,6 +13,13 @@ const location = document.querySelector(".location");
 
 const hourlyForecast = document.querySelectorAll(".hourly-forecast");
 const hourlyTemp = document.querySelectorAll(".hourly-temp");
+
+// const for daily forecast predictions
+
+const dailyNames = document.querySelectorAll(".daily-name");
+const dailyForecast = document.querySelectorAll(".daily-forecast");
+
+// geolocalisation
 
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
@@ -34,6 +39,8 @@ if (navigator.geolocation) {
   alert("Geolocation is not supported by your browser");
 }
 
+// Api call
+
 function APICall(long, lat) {
   fetch(
     `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&units=metric&lang=fr&appid=${API_KEY}`
@@ -45,11 +52,15 @@ function APICall(long, lat) {
       apiResults = data;
       console.log(apiResults);
 
+      //   current weather
+
       weather.innerText = apiResults.list[0].weather[0].main;
       temp.innerText = `${Math.round(apiResults.list[0].main.temp)}°C`;
       location.innerText = apiResults.city.name;
 
-      //   hourly predictions
+      // hourly predictions
+
+      //    show hour
 
       for (let i = 0; i < hourlyForecast.length; i++) {
         let forecastHour1 = apiResults.list[i].dt_txt.split("")[11];
@@ -58,9 +69,31 @@ function APICall(long, lat) {
           Math.round(forecastHour1 + forecastHour2) + " h";
       }
 
+      //    hourly predictions
+
       for (let j = 0; j < hourlyTemp.length; j++) {
         hourlyTemp[j].innerText =
           Math.round(apiResults.list[j].main.temp) + "°C";
+      }
+
+      // weekly forecast
+
+      //    show the thirst 3 leters of the day
+
+      for (let k = 0; k < 5; k++) {
+        dailyNames[k].innerText = arrayWeekDaysSorted[k].slice(0, 3);
+      }
+
+      //    show the temperature of the day
+
+      for (let l = 0; l < 5; l++) {
+        if (l == 0) {
+          dailyForecast[l].innerText =
+            Math.round(apiResults.list[l + 8].main.temp) + "°C";
+        } else {
+          dailyForecast[l].innerText =
+            Math.round(apiResults.list[l * 8].main.temp) + "°C";
+        }
       }
     });
 }
