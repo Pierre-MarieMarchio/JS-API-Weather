@@ -31,7 +31,6 @@ let hour = new Date().getHours();
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
     (position) => {
-      console.log(position);
       let long = position.coords.longitude;
       let lat = position.coords.latitude;
 
@@ -57,7 +56,6 @@ function APICall(long, lat) {
     })
     .then((data) => {
       apiResults = data;
-      console.log(apiResults);
 
       //   current weather
 
